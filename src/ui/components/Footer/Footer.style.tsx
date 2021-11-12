@@ -19,7 +19,7 @@ export const BorderFooter = styled.img`
 
 export const AtroMona = styled.img`
   position: absolute;
-  height: 450px;
+  height: 500px;
   bottom: 70px;
   right: 0;
 `;

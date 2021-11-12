@@ -25,7 +25,7 @@ const Home: NextPage = () => {
                 development platform in the world.
               </p>
             </TextContent>
-            <img src="globo.png" alt="globoTec" />
+            <img src="/globo.png" alt="globoTec" />
           </FirstSection>
           <SecondSection>
             <div>

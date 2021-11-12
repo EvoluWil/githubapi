@@ -4,9 +4,9 @@ import { AtroMona, BorderFooter, FooterContainer } from "./Footer.style";
 export const Footer = () => {
   return (
     <FooterContainer>
-      <BorderFooter src="effect.svg" alt="" />
-      <AtroMona src="astro-mona.svg" alt="AtroMona" />
-      <img src="GitHub_Logo.png" alt="GitHub" height="30px" />
+      <BorderFooter src="/effect.svg" alt="" />
+      <AtroMona src="/astro-mona.svg" alt="AtroMona" />
+      <img src="/GitHub_Logo.png" alt="GitHub" height="30px" />
       <p>Data provided by © 2021 GitHub, Inc.</p>
       <p>
         Developed by{" "}

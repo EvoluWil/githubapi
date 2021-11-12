@@ -1,9 +1,13 @@
 import React from "react";
 import { ButtonContainer } from "./Button.style";
 
-export const Button = () => {
+interface ButtonProps {
+  onClick: () => {};
+}
+
+export const Button: React.FC<ButtonProps> = ({ onClick }) => {
   return (
-    <ButtonContainer>
+    <ButtonContainer onClick={onClick}>
       <i className="fa fa-"></i> <p>Sign in</p>
     </ButtonContainer>
   );

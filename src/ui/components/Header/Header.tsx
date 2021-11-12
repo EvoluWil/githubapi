@@ -1,5 +1,4 @@
-import React, { useContext, useEffect } from "react";
-import type { NextPage } from "next";
+import React, { useContext } from "react";
 import Switch from "react-switch";
 import { ThemeContext } from "styled-components";
 import { Avatar, HeaderContainer, HeaderContent } from "./Header.style";
@@ -16,7 +15,7 @@ export const Header: React.FC<HeaderProps> = ({ toggleTheme }) => {
         <Avatar>
           <img src="http://github.com/Willian-Rodrigues.png" alt="user" />
         </Avatar>
-        <img src="logo-light.png" alt="GitHub" />
+        <img src="/logo-light.png" alt="GitHub" />
         <Switch
           onChange={toggleTheme}
           checked={title === "dark"}

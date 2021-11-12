@@ -4,9 +4,7 @@ export const HomeContainer = styled.main`
   background-image: linear-gradient(
     120deg,
     #320070 0%,
-    #13253a 21.35%,
     #13253b 48.96%,
-    #13253b 78.65%,
     #003370 100%
   );
 `;

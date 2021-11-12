@@ -2,14 +2,18 @@ import React, { useEffect, useState } from "react";
 import GlobalStyles from "../ui/styles/globals";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "styled-components";
+import { Provider as NextAuthProvider } from "next-auth/client";
 import light from "../ui/theme/light";
 import dark from "../ui/theme/dark";
 import { Header } from "../ui/components/Header/Header";
-import { Footer } from "ui/components/Footer/Footer";
-import { AppContainer } from "ui/styles/page/_app";
+import { useRouter } from "next/router";
+import { AuthProvider } from "../hooks/Auth";
+import { AppContainer } from "../ui/styles/page/_app.style";
+import { Footer } from "../ui/components/Footer/Footer";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState(light);
+  const { asPath } = useRouter();
 
   useEffect(() => {
     const title = localStorage.getItem("@gitapi:theme");
@@ -28,12 +32,24 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <AppContainer>
-        {/*  <Header toggleTheme={handleChageTheme} /> */}
-        <Component {...pageProps} />
-        <Footer />
-      </AppContainer>
+      <NextAuthProvider session={pageProps.session}>
+        <AuthProvider>
+          <GlobalStyles />
+          <AppContainer>
+            {asPath === "/" ? (
+              <>
+                <Component {...pageProps} />
+                <Footer />
+              </>
+            ) : (
+              <>
+                <Header toggleTheme={handleChageTheme} />
+                <Component {...pageProps} />
+              </>
+            )}
+          </AppContainer>
+        </AuthProvider>
+      </NextAuthProvider>
     </ThemeProvider>
   );
 }

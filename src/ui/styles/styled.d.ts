@@ -18,6 +18,7 @@ declare module "styled-components" {
       text: {
         primary: string;
         secondary: string;
+        link: string;
       };
       error: {
         main: string;
