@@ -3,12 +3,15 @@ import { ButtonContainer } from "./Button.style";
 
 interface ButtonProps {
   onClick: () => {};
+  icon?: string;
+  title?: string;
 }
 
-export const Button: React.FC<ButtonProps> = ({ onClick }) => {
+export const Button: React.FC<ButtonProps> = ({ onClick, title, icon }) => {
   return (
     <ButtonContainer onClick={onClick}>
-      <i className="fa fa-"></i> <p>Sign in</p>
+      {icon && <i className={`fa fa-${icon}`}></i>}
+      <p>{title}</p>
     </ButtonContainer>
   );
 };

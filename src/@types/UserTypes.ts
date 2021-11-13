@@ -3,4 +3,5 @@ export interface UserTypes {
   image: string;
   name: string;
   userName: string;
+  avatar_url?: string;
 }
