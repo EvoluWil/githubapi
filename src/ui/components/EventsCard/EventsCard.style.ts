@@ -28,7 +28,6 @@ export const ContentContainer = styled.footer`
 
   h2 {
     font-size: 1rem;
-    color: ${({ theme }) => theme.colors.text.primary};
   }
 
   p {
@@ -52,4 +51,10 @@ export const ContentContainer = styled.footer`
     font-size: 0.75rem;
     color: ${({ theme }) => theme.colors.text.secondary};
   }
+`;
+
+export const LanguageContainer = styled.section`
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
 `;

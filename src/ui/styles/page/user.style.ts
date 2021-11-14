@@ -50,6 +50,12 @@ export const RepositoriesList = styled.div<RepositoriesListProps>`
     css`
       align-items: center;
     `}
+
+  p {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;
 
 export const EventsContainer = styled.div`
@@ -61,4 +67,17 @@ export const EventsTitle = styled.h2`
   font-size: 1rem;
   padding: 3rem 0 0 2rem;
   font-weight: normal;
+`;
+
+export const ShowMore = styled.h2`
+  font-size: 0.75rem;
+  color: ${({ theme }) => theme.colors.text.secondary};
+  margin-top: 1rem;
+  cursor: pointer;
+
+  transition: color 0.2s;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.text.link};
+  }
 `;

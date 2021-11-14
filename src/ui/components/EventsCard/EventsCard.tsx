@@ -2,10 +2,17 @@ import React from "react";
 import { Button } from "../Button/Button";
 import { Divider } from "../Divider/Divider";
 import { InfoCard } from "../InfoCard/InfoCard";
-import { ContentContainer, EventCardContainer } from "./EventsCard.style";
+import {
+  ContentContainer,
+  EventCardContainer,
+  LanguageContainer,
+} from "./EventsCard.style";
 import moment from "moment";
 import { RepositoryTypes } from "../../../@types/Repository";
 import { formatNumber } from "services/utils/formatNumber";
+import Link from "next/link";
+import { TagLanguageColor } from "../LanguageColor/LanguageColor";
+import { LANGUAGE_COLOR } from "services/utils/laguageColors";
 
 interface EventsCardProps {
   type: string;
@@ -13,6 +20,7 @@ interface EventsCardProps {
   repo: RepositoryTypes;
   createdAt: string;
   picture: string;
+  setRepository: (repository: RepositoryTypes) => void;
 }
 
 export const EventsCard: React.FC<EventsCardProps> = ({
@@ -21,6 +29,7 @@ export const EventsCard: React.FC<EventsCardProps> = ({
   repo,
   createdAt,
   picture,
+  setRepository,
 }) => {
   return (
     <EventCardContainer>
@@ -28,18 +37,41 @@ export const EventsCard: React.FC<EventsCardProps> = ({
         src={picture}
         title={
           <>
-            <strong>{createdBy}</strong> {type}{" "}
-            <strong>{repo?.full_name}</strong>
+            <a
+              href={`http://github.com/${createdBy}`}
+              rel="noreferrer"
+              target="_blank"
+            >
+              <strong>{createdBy}</strong>{" "}
+            </a>
+            {type}{" "}
+            <Link href={repo?.full_name}>
+              <a onClick={() => setRepository(repo)}>
+                <strong>{repo?.full_name}</strong>
+              </a>
+            </Link>
           </>
         }
         createdAt={moment(createdAt).startOf("day").fromNow()}
       />
       <ContentContainer>
         <Button onClick={() => ""} title="Star" icon="star-o" />
-        <h2>{repo?.full_name}</h2>
+        <Link href={repo?.full_name}>
+          <a onClick={() => setRepository(repo)}>
+            <h2>{repo?.full_name}</h2>
+          </a>
+        </Link>
         <p>{repo?.description}</p>
         <div>
-          {repo?.language && <span>{repo?.language}</span>}
+          {repo?.language && (
+            <LanguageContainer>
+              <TagLanguageColor
+                color={LANGUAGE_COLOR[`${repo?.language}`]}
+                size={10}
+              />
+              <span>{repo?.language}</span>
+            </LanguageContainer>
+          )}
 
           {Number(repo?.stargazers_count) !== 0 && (
             <span>

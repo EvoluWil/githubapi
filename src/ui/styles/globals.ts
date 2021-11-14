@@ -25,7 +25,11 @@ export default createGlobalStyle`
   }
 
   a{
-    color: ${({ theme }) => theme.colors.text.link};
+    color: ${({ theme }) => theme.colors.text.primary};
     text-decoration: none;
+
+    &:hover{
+      color: ${({ theme }) => theme.colors.text.link}
+    }
   }
 `;

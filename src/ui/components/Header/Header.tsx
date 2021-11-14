@@ -1,4 +1,5 @@
 import { useAuth } from "hooks/Auth";
+import Link from "next/link";
 import React, { useContext } from "react";
 import Switch from "react-switch";
 import { ThemeContext } from "styled-components";
@@ -15,7 +16,11 @@ export const Header: React.FC<HeaderProps> = ({ toggleTheme }) => {
 
   return (
     <HeaderContainer>
-      <img src="/logo-light.png" alt="GitHub" />
+      <Link href={`/${user?.userName}`}>
+        <a>
+          <img src="/logo-light.png" alt="GitHub" />
+        </a>
+      </Link>
       <div>
         <Switch
           onChange={toggleTheme}
@@ -28,7 +33,13 @@ export const Header: React.FC<HeaderProps> = ({ toggleTheme }) => {
           offColor={colors.secondary.main}
           onColor={colors.primary.main}
         />
-        <Avatar src={user?.image} alt={user?.name} />
+        <a
+          href={`http://github.com/${user?.userName}`}
+          rel="noreferrer"
+          target="_blank"
+        >
+          <Avatar src={user?.image} alt={user?.name} />
+        </a>
       </div>
     </HeaderContainer>
   );

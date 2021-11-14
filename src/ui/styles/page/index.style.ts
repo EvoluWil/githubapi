@@ -15,10 +15,6 @@ export const HomeContent = styled.div`
   flex-direction: column;
   justify-content: space-between;
   padding: 0 16px;
-
-  hr {
-    display: block;
-  }
 `;
 
 export const FirstSection = styled.div`
@@ -39,12 +35,12 @@ export const TextContent = styled.div`
   }
   p {
     font-size: 24px;
-    color: ${({ theme }) => theme.colors.text.secondary};
+    color: #8193b2;
   }
 `;
 
 export const SecondSection = styled.div`
-  border-top: 1px solid ${({ theme }) => theme.colors.text.primary};
+  border-top: 1px solid #8193b2;
   padding: 0 24px;
   width: 100%;
   height: 63px;

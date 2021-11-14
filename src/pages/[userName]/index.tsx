@@ -1,34 +1,54 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import {
   EventsTitle,
   RepositoriesContainer,
   RepositoriesList,
   RepositoriesTitle,
+  ShowMore,
   UserPageContainer,
 } from "ui/styles/page/user.style";
 import { EventsCard } from "ui/components/EventsCard/EventsCard";
 import { InfoCard } from "ui/components/InfoCard/InfoCard";
-import { Button } from "ui/components/Button/Button";
 import { useRepository } from "hooks/Repository";
-import { useSession } from "next-auth/client";
 import { useEvent } from "hooks/Event";
 import { getEventTypeLabel } from "services/utils/getEventTypeLabel";
 import { Loading } from "ui/components/Loading/Loading";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 const User: NextPage = () => {
   const {
     repositories,
     getRepositories,
     loadingRepositories,
+    setRepository,
   } = useRepository();
   const { events, getEvents, loadingEvents } = useEvent();
-  const [session] = useSession();
+  const [repoPage, setRepoPage] = useState(2);
+  const [eventPage, setEventPage] = useState(2);
+  const { asPath, query } = useRouter();
 
   useEffect(() => {
-    getRepositories();
-    getEvents();
-  }, [session?.user]);
+    if (query.userName) {
+      getRepositories(query);
+      getEvents(query);
+    }
+  }, [query]);
+
+  const handleClickmoreRepo = async () => {
+    const res = await getRepositories(query, repoPage);
+    if (!res) {
+      setRepoPage(repoPage + 1);
+    }
+  };
+
+  const handleClickmoreEvent = async () => {
+    const res = await getEvents(query, eventPage);
+    if (!res) {
+      setEventPage(eventPage + 1);
+    }
+  };
 
   return (
     <UserPageContainer>
@@ -40,15 +60,19 @@ const User: NextPage = () => {
           {loadingRepositories ? (
             <Loading />
           ) : (
-            repositories.map((reository) => (
-              <InfoCard
-                key={reository?.id}
-                src={reository?.owner?.avatar_url}
-                title={reository?.full_name}
-              />
+            repositories.map((repository) => (
+              <Link key={repository?.id} href={`${asPath}/${repository.name}`}>
+                <a onClick={() => setRepository(repository)}>
+                  <InfoCard
+                    src={repository?.owner?.avatar_url}
+                    title={repository?.full_name}
+                  />
+                </a>
+              </Link>
             ))
           )}
         </RepositoriesList>
+        <ShowMore onClick={() => handleClickmoreRepo()}>Show more</ShowMore>
       </RepositoriesContainer>
       {loadingEvents ? (
         <Loading
@@ -71,10 +95,17 @@ const User: NextPage = () => {
                   createdBy={event?.actor?.login}
                   repo={event?.repo}
                   createdAt={event?.created_at}
+                  setRepository={(repository) => setRepository(repository)}
                 />
               )
             );
           })}
+          <ShowMore
+            onClick={() => handleClickmoreEvent()}
+            style={{ padding: "2rem" }}
+          >
+            Show more
+          </ShowMore>
         </div>
       )}
     </UserPageContainer>

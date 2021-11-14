@@ -10,9 +10,13 @@ export const HeaderContent = styled.div`
   padding: 16px 24px;
   margin: 0 auto;
 
-  > img {
+  a > img {
     width: 32px;
     height: 32px;
+  }
+
+  div {
+    color: #fff;
   }
 `;
 

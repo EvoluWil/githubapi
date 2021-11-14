@@ -6,16 +6,23 @@ export const Footer = () => {
     <FooterContainer>
       <BorderFooter src="/effect.svg" alt="" />
       <AtroMona src="/astro-mona.svg" alt="AtroMona" />
-      <img src="/GitHub_Logo.png" alt="GitHub" height="30px" />
-      <p>Data provided by © 2021 GitHub, Inc.</p>
+      <a href="http://github.com" rel="noreferrer" target="_blank">
+        <img src="/GitHub_Logo.png" alt="GitHub" height="30px" />
+      </a>
+      <a
+        href="https://docs.github.com/pt/rest"
+        rel="noreferrer"
+        target="_blank"
+      >
+        Data provided by © 2021 GitHub, Inc.
+      </a>
       <p>
-        Developed by{" "}
         <a
           href="https://github.com/Willian-Rodrigues"
           target="_blank"
           rel="noreferrer"
         >
-          Will
+          Developed by Will
         </a>
       </p>
     </FooterContainer>

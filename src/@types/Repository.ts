@@ -1,3 +1,4 @@
+import { LANGUAGE_TYPES } from "services/utils/laguageColors";
 import { UserTypes } from "./UserTypes";
 
 export interface RepositoryTypes {
@@ -16,7 +17,7 @@ export interface RepositoryTypes {
   size: 8405;
   stargazers_count: 0;
   watchers_count: 0;
-  language: string;
+  language: LANGUAGE_TYPES;
   forks_count: 0;
   open_issues_count: 0;
   visibility: string;

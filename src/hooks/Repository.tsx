@@ -8,8 +8,9 @@ import {
 import { RepositoryContextTypes } from "../@types/RepositoryContextTypes";
 import { RepositoryTypes } from "../@types/Repository";
 import { toast } from "react-toastify";
-import { useAuth } from "./Auth";
 import { api } from "services/api";
+import { CommitTypes } from "../@types/Commit";
+import { TreeTypes } from "../@types/Tree";
 
 interface RepositoryProviderProps {
   children: ReactNode;
@@ -21,25 +22,40 @@ const RepositoryProvider: React.FC<RepositoryProviderProps> = ({
   children,
 }) => {
   const [repositories, setRepositories] = useState<RepositoryTypes[]>([]);
-  const { user } = useAuth();
+  const [commit, setCommit] = useState<CommitTypes>({} as CommitTypes);
+  const [tree, setTree] = useState<TreeTypes[]>([]);
+  const [repository, setRepository] = useState<RepositoryTypes>(
+    {} as RepositoryTypes
+  );
   const [loadingRepositories, setLoadingRepositories] = useState<boolean>(
     false
   );
+  const [loadingRepository, setLoadingRepository] = useState<boolean>(false);
+  const [loadingTree, setLoadingTree] = useState<boolean>(false);
 
-  const getRepositories = async (page: number = 1) => {
-    if (user && !repositories.length) {
+  const getRepositories = async (query: any, page: number = 1) => {
+    if (!repositories.length || page !== 1) {
       setLoadingRepositories(true);
       try {
         const { data } = await api.get<RepositoryTypes[]>(
-          `/users/${user?.userName}/repos`,
+          `/users/${query.userName}/repos`,
           {
-            params: { per_page: 10, sort: "updated", page },
+            params: { per_page: 5, sort: "updated", page },
           }
         );
-        setRepositories(data);
-        setLoadingRepositories(false);
+        if (page === 1) {
+          setRepositories(data);
+          setLoadingRepositories(false);
+        } else {
+          const repos = [...repositories, ...data];
+          setRepositories(repos);
+          setLoadingRepositories(false);
+        }
       } catch (error) {
         setLoadingRepositories(false);
+        if (page !== 1) {
+          return true;
+        }
         toast.error(
           "Ops! algo deu errado, verifique sua conexão e tente novamente."
         );
@@ -47,9 +63,87 @@ const RepositoryProvider: React.FC<RepositoryProviderProps> = ({
     }
   };
 
+  const getRepository = async (query: any) => {
+    if (!repository?.name) {
+      setLoadingRepository(true);
+      try {
+        const { data } = await api.get<RepositoryTypes>(
+          `/repos/${query.userName}/${query.repository}`
+        );
+        setRepository(data);
+        setLoadingRepository(false);
+        const { data: commits } = await api.get<CommitTypes[]>(
+          `/repos/${data.full_name}/commits`
+        );
+        commits[0].totalCommits = commits?.length;
+        setCommit(commits[0]);
+      } catch (error) {
+        setLoadingRepositories(false);
+        toast.error(
+          "Ops! algo deu errado, verifique sua conexão e tente novamente."
+        );
+      }
+    } else if (repository && !commit) {
+      try {
+        const { data } = await api.get<CommitTypes[]>(
+          `/repos/${repository.full_name}/commits/`
+        );
+        data[0].totalCommits = data.length;
+        setCommit(data[0]);
+      } catch (error) {
+        toast.error(
+          "Ops! algo deu errado, verifique sua conexão e tente novamente."
+        );
+      }
+    }
+  };
+
+  const getTree = async () => {
+    setLoadingTree(true);
+    try {
+      const { data } = await api.get<{ tree: TreeTypes[] }>(
+        `/repos/${repository.full_name}/git/trees/${commit.sha}`
+      );
+      setTree(
+        data.tree.sort((a, b) => {
+          if (a.type < b.type) {
+            return 1;
+          }
+          if (a.type > b.type) {
+            return -1;
+          }
+          return 0;
+        })
+      );
+      setLoadingTree(false);
+    } catch (error) {
+      setLoadingTree(false);
+      toast.error(
+        "Ops! algo deu errado, verifique sua conexão e tente novamente."
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (!tree.length && commit?.sha && repository?.name) {
+      getTree();
+    }
+  }, [commit, repository]);
+
   return (
     <RepositoryContext.Provider
-      value={{ repositories, getRepositories, loadingRepositories }}
+      value={{
+        repositories,
+        repository,
+        commit,
+        tree,
+        getRepositories,
+        getRepository,
+        setRepository,
+        loadingRepositories,
+        loadingRepository,
+        loadingTree,
+      }}
     >
       {children}
     </RepositoryContext.Provider>

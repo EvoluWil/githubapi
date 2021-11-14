@@ -15,7 +15,7 @@ export const HeaderContainer = styled.header`
     align-items: center;
     gap: 1rem;
   }
-  > img {
+  a > img {
     width: 32px;
     height: 32px;
   }

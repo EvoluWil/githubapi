@@ -13,7 +13,6 @@ export default NextAuth({
   ],
   callbacks: {
     async signIn(user: User, account: Account, profile: Profile) {
-      console.log(user, account, profile);
       return true;
     },
     async session(session) {
