@@ -9,6 +9,7 @@ export default NextAuth({
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_SECRET_KEY,
       scope: "read:user",
+      domain: process.env.NEXTAUTH_URL || "http://localhost:3000",
     }),
   ],
   callbacks: {
