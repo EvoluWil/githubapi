@@ -8,7 +8,6 @@
 ## About
 
 Project using a public api from github with Next.JS and Typescript, with authentication in github, OAuth.
-<img height="150px" src="https://octodex.github.com/images/NUX_Octodex.gif" alt="GitCat" />
 
 ## screens
 
