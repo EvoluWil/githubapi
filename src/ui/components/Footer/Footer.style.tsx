@@ -11,8 +11,6 @@ export const FooterContainer = styled.footer`
   color: ${({ theme }) => theme.colors.text.primary};
 
   @media (max-width: 700px) {
-    flex-direction: column;
-    justify-content: space-evenly;
-    padding-bottom: 4rem;
+    margin-top: 200px;
   }
 `;

@@ -38,13 +38,6 @@ const User: React.FC = () => {
     }
   }, [query]);
 
-  useEffect(() => {
-    if (query.userName) {
-      getRepositories(query);
-      getEvents(query);
-    }
-  }, [query]);
-
   const handleClickmoreRepo = async () => {
     const res = await getRepositories(query, repoPage);
     if (!res) {
