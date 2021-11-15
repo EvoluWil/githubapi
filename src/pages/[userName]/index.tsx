@@ -58,59 +58,58 @@ const User: React.FC = () => {
         <RepositoriesTitle>
           <h2>Repositories</h2>
         </RepositoriesTitle>
-        <RepositoriesList loading={loadingRepositories.toString()}>
-          {loadingRepositories ? (
-            <Loading />
-          ) : (
-            repositories.map((repository) => (
-              <Link key={repository?.id} href={`${asPath}/${repository.name}`}>
-                <a onClick={() => setRepository(repository)}>
-                  <InfoCard
-                    src={repository?.owner?.avatar_url}
-                    title={repository?.full_name}
-                  />
-                </a>
-              </Link>
-            ))
-          )}
+        <RepositoriesList>
+          {repositories.map((repository) => (
+            <Link key={repository?.id} href={`${asPath}/${repository.name}`}>
+              <a onClick={() => setRepository(repository)}>
+                <InfoCard
+                  src={repository?.owner?.avatar_url}
+                  title={repository?.full_name}
+                />
+              </a>
+            </Link>
+          ))}
+          <div style={{ textAlign: "center", width: "100%" }}>
+            {loadingRepositories && <Loading />}
+          </div>
+
           <Divider />
           <ShowMore onClick={() => handleClickmoreRepo()}>Show more</ShowMore>
         </RepositoriesList>
       </RepositoriesContainer>
-      {loadingEvents ? (
-        <Loading
-          img={
-            "https://github.githubassets.com/images/mona-loading-default.gif"
-          }
-          size="48"
-        />
-      ) : (
-        <section>
-          <EventsTitle>All activity</EventsTitle>
-          {events.map((event) => {
-            const typeLabel = getEventTypeLabel(event?.type);
-            return (
-              typeLabel !== "" && (
-                <EventsCard
-                  key={event?.id}
-                  type={typeLabel}
-                  picture={event?.actor?.avatar_url}
-                  createdBy={event?.actor?.login}
-                  repo={event?.repo}
-                  createdAt={event?.created_at}
-                  setRepository={(repository) => setRepository(repository)}
-                />
-              )
-            );
-          })}
-          <ShowMore
-            onClick={() => handleClickmoreEvent()}
-            style={{ padding: "2rem" }}
-          >
-            Show more
-          </ShowMore>
-        </section>
-      )}
+      <section>
+        <EventsTitle>All activity</EventsTitle>
+        {events.map((event) => {
+          const typeLabel = getEventTypeLabel(event?.type);
+          return (
+            typeLabel !== "" && (
+              <EventsCard
+                key={event?.id}
+                type={typeLabel}
+                picture={event?.actor?.avatar_url}
+                createdBy={event?.actor?.login}
+                repo={event?.repo}
+                createdAt={event?.created_at}
+                setRepository={(repository) => setRepository(repository)}
+              />
+            )
+          );
+        })}
+        {loadingEvents && (
+          <Loading
+            img={
+              "https://github.githubassets.com/images/mona-loading-default.gif"
+            }
+            size="48"
+          />
+        )}
+        <ShowMore
+          onClick={() => handleClickmoreEvent()}
+          style={{ padding: "2rem" }}
+        >
+          Show more
+        </ShowMore>
+      </section>
     </UserPageContainer>
   );
 };

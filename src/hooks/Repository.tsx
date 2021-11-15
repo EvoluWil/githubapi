@@ -108,8 +108,8 @@ const RepositoryProvider: React.FC<RepositoryProviderProps> = ({
 
   const getTree = async () => {
     setLoadingTree(true);
-    const commit = await getCommit();
     try {
+      const commit = await getCommit();
       const { data } = await api.get<{ tree: TreeTypes[] }>(
         `/repos/${repository.full_name}/git/trees/${commit?.sha}`
       );

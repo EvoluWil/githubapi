@@ -1,9 +1,10 @@
 import styled, { css } from "styled-components";
 
 export const UserPageContainer = styled.main`
-  height: calc(100vh);
   display: grid;
   grid-template-columns: 28vw 1fr;
+  height: auto;
+  min-height: 100vh;
 
   @media (max-width: 1000px) {
     max-width: 100vw;
@@ -46,23 +47,13 @@ export const RepositoriesTitle = styled.div`
   }
 `;
 
-interface RepositoriesListProps {
-  loading: string;
-}
-
-export const RepositoriesList = styled.div<RepositoriesListProps>`
+export const RepositoriesList = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
   margin-top: 1rem;
-
-  ${({ loading }) =>
-    !loading &&
-    css`
-      align-items: center;
-    `}
 
   p {
     &:hover {

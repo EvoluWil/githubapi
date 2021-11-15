@@ -62,6 +62,7 @@ export const RepositoryTreeContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     background: ${({ theme }) => theme.colors.primary.main};
+    overflow-x: hidden;
   }
 
   ul {
@@ -77,6 +78,7 @@ export const RepositoryTreeContainer = styled.div`
     gap: 1rem;
     font-size: 0.875rem;
     color: ${({ theme }) => theme.colors.text.secondary};
+    overflow-x: hidden;
 
     &:hover {
       background: ${({ theme }) => theme.colors.primary.main};
@@ -85,9 +87,20 @@ export const RepositoryTreeContainer = styled.div`
     h3 {
       width: 30%;
       color: ${({ theme }) => theme.colors.text.primary};
+
+      @media (max-width: 1000px) {
+        width: 70%;
+      }
     }
     p {
       width: 50%;
+      @media (max-width: 1000px) {
+        display: none;
+      }
+    }
+
+    span {
+      white-space: nowrap;
     }
   }
   @media (max-width: 1000px) {
@@ -99,6 +112,7 @@ export const CommitContainer = styled.div`
   display: flex;
   gap: 1rem;
   align-items: center;
+  white-space: nowrap;
 
   span {
     font-size: 0.875rem;
@@ -228,6 +242,6 @@ export const LoadingContainer = styled.span`
 `;
 
 export const Display = styled.a`
-  display: none;
-  display: hidden;
+  @media (max-width: 1000px) {
+  }
 `;

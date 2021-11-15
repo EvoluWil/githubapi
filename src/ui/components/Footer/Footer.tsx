@@ -5,7 +5,7 @@ export const Footer = () => {
   return (
     <FooterContainer>
       <a href="http://github.com" rel="noreferrer" target="_blank">
-        <img src="/GitHub_Logo.png" alt="GitHub" height="30px" />
+        <img src="/GitHub_Logo_White.png" alt="GitHub" height="30px" />
       </a>
       <a
         href="https://docs.github.com/pt/rest"

@@ -1,9 +1,11 @@
 import { useAuth } from "hooks/Auth";
+import { signout } from "next-auth/client";
 import Link from "next/link";
 import React, { useContext } from "react";
 import Switch from "react-switch";
 import { ThemeContext } from "styled-components";
 import { Avatar } from "../Avatar/Avatar";
+import { Button } from "../Button/Button";
 import { HeaderContainer } from "./Header.style";
 
 interface HeaderProps {
@@ -33,6 +35,7 @@ export const Header: React.FC<HeaderProps> = ({ toggleTheme }) => {
           offColor={colors.secondary.main}
           onColor={colors.primary.main}
         />
+        <Button onClick={() => signout()} title="Sing out" />
         <a
           href={`http://github.com/${user?.userName}`}
           rel="noreferrer"

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const EventCardContainer = styled.footer`
+export const EventCardContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -16,9 +16,17 @@ export const EventCardContainer = styled.footer`
     width: calc(100% - 1rem);
     padding: 1rem;
   }
+
+  p {
+    white-space: pre-wrap;
+  }
+
+  a > h2 {
+    white-space: pre-wrap;
+  }
 `;
 
-export const ContentContainer = styled.footer`
+export const ContentContainer = styled.div`
   width: calc(100% - 2rem - 3rem);
   display: flex;
   flex-direction: column;
