@@ -35,7 +35,7 @@ export const Header: React.FC<HeaderProps> = ({ toggleTheme }) => {
           offColor={colors.secondary.main}
           onColor={colors.primary.main}
         />
-        <Button onClick={() => signout()} title="Sing out" />
+        <Button onClick={() => signout()} title="Sign out" />
         <a
           href={`http://github.com/${user?.userName}`}
           rel="noreferrer"
