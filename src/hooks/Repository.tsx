@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { api } from "services/api";
 import { CommitTypes } from "../@types/Commit";
 import { TreeTypes } from "../@types/Tree";
+import { useRouter } from "next/router";
 
 interface RepositoryProviderProps {
   children: ReactNode;
@@ -32,6 +33,7 @@ const RepositoryProvider: React.FC<RepositoryProviderProps> = ({
   );
   const [loadingRepository, setLoadingRepository] = useState<boolean>(false);
   const [loadingTree, setLoadingTree] = useState<boolean>(false);
+  const { query, push } = useRouter();
 
   const getRepositories = async (query: any, page: number = 1) => {
     if (!repositories.length || page !== 1) {
@@ -51,7 +53,11 @@ const RepositoryProvider: React.FC<RepositoryProviderProps> = ({
           setRepositories(repos);
           setLoadingRepositories(false);
         }
-      } catch (error) {
+      } catch (error: any) {
+        if (error?.response?.status === 404) {
+          push("/404");
+          return;
+        }
         setLoadingRepositories(false);
         if (page !== 1) {
           return true;
@@ -72,25 +78,12 @@ const RepositoryProvider: React.FC<RepositoryProviderProps> = ({
         );
         setRepository(data);
         setLoadingRepository(false);
-        const { data: commits } = await api.get<CommitTypes[]>(
-          `/repos/${data.full_name}/commits`
-        );
-        commits[0].totalCommits = commits?.length;
-        setCommit(commits[0]);
-      } catch (error) {
+      } catch (error: any) {
+        if (error?.response?.status === 404) {
+          push("/404");
+          return;
+        }
         setLoadingRepositories(false);
-        toast.error(
-          "Ops! algo deu errado, verifique sua conexão e tente novamente."
-        );
-      }
-    } else if (repository && !commit) {
-      try {
-        const { data } = await api.get<CommitTypes[]>(
-          `/repos/${repository.full_name}/commits/`
-        );
-        data[0].totalCommits = data.length;
-        setCommit(data[0]);
-      } catch (error) {
         toast.error(
           "Ops! algo deu errado, verifique sua conexão e tente novamente."
         );
@@ -98,11 +91,27 @@ const RepositoryProvider: React.FC<RepositoryProviderProps> = ({
     }
   };
 
+  const getCommit = async () => {
+    try {
+      const { data } = await api.get<CommitTypes[]>(
+        `/repos/${repository.full_name}/commits`
+      );
+      data[0].totalCommits = data?.length;
+      setCommit(data[0]);
+      return data[0];
+    } catch (error) {
+      toast.error(
+        "Ops! algo deu errado, verifique sua conexão e tente novamente."
+      );
+    }
+  };
+
   const getTree = async () => {
     setLoadingTree(true);
+    const commit = await getCommit();
     try {
       const { data } = await api.get<{ tree: TreeTypes[] }>(
-        `/repos/${repository.full_name}/git/trees/${commit.sha}`
+        `/repos/${repository.full_name}/git/trees/${commit?.sha}`
       );
       setTree(
         data.tree.sort((a, b) => {
@@ -125,10 +134,10 @@ const RepositoryProvider: React.FC<RepositoryProviderProps> = ({
   };
 
   useEffect(() => {
-    if (!tree.length && commit?.sha && repository?.name) {
+    if (query.repository) {
       getTree();
     }
-  }, [commit, repository]);
+  }, [query, commit, repository]);
 
   return (
     <RepositoryContext.Provider

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import type { NextPage } from "next";
+import type { GetServerSideProps } from "next";
 import {
   EventsTitle,
   RepositoriesContainer,
@@ -16,8 +16,10 @@ import { getEventTypeLabel } from "services/utils/getEventTypeLabel";
 import { Loading } from "ui/components/Loading/Loading";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { Divider } from "ui/components/Divider/Divider";
+import { getSession } from "next-auth/client";
 
-const User: NextPage = () => {
+const User: React.FC = () => {
   const {
     repositories,
     getRepositories,
@@ -28,6 +30,13 @@ const User: NextPage = () => {
   const [repoPage, setRepoPage] = useState(2);
   const [eventPage, setEventPage] = useState(2);
   const { asPath, query } = useRouter();
+
+  useEffect(() => {
+    if (query.userName) {
+      getRepositories(query);
+      getEvents(query);
+    }
+  }, [query]);
 
   useEffect(() => {
     if (query.userName) {
@@ -71,8 +80,9 @@ const User: NextPage = () => {
               </Link>
             ))
           )}
+          <Divider />
+          <ShowMore onClick={() => handleClickmoreRepo()}>Show more</ShowMore>
         </RepositoriesList>
-        <ShowMore onClick={() => handleClickmoreRepo()}>Show more</ShowMore>
       </RepositoriesContainer>
       {loadingEvents ? (
         <Loading
@@ -82,7 +92,7 @@ const User: NextPage = () => {
           size="48"
         />
       ) : (
-        <div>
+        <section>
           <EventsTitle>All activity</EventsTitle>
           {events.map((event) => {
             const typeLabel = getEventTypeLabel(event?.type);
@@ -106,10 +116,30 @@ const User: NextPage = () => {
           >
             Show more
           </ShowMore>
-        </div>
+        </section>
       )}
     </UserPageContainer>
   );
 };
 
 export default User;
+
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+}): Promise<any> => {
+  const session = await getSession({ req });
+
+  if (!session?.user) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {
+      session,
+    },
+  };
+};

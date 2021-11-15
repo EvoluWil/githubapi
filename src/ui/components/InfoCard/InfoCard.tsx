@@ -18,8 +18,9 @@ export const InfoCard: React.FC<InfoCardProps> = ({
   return (
     <InfoContainer>
       <Avatar src={src} alt={alt} />
-      <p>{title}</p>
-      <span>{createdAt}</span>
+      <p>
+        {title} <span>{createdAt}</span>
+      </p>
     </InfoContainer>
   );
 };

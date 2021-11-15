@@ -37,13 +37,18 @@ export const TitleRepositoryDetail = styled.div`
 
 export const RepositoryData = styled.div`
   width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 30vw;
+  display: flex;
   gap: 1rem;
   margin-top: 1rem;
+  flex: 1;
+
+  @media (max-width: 1000px) {
+    flex-direction: column-reverse;
+  }
 `;
 
 export const RepositoryTreeContainer = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -85,6 +90,9 @@ export const RepositoryTreeContainer = styled.div`
       width: 50%;
     }
   }
+  @media (max-width: 1000px) {
+    width: 100%;
+  }
 `;
 
 export const CommitContainer = styled.div`
@@ -99,6 +107,12 @@ export const CommitContainer = styled.div`
     &:first-child {
       font-size: 0.75rem;
     }
+
+    @media (max-width: 1000px) {
+      &:nth-child(2) {
+        display: none;
+      }
+    }
   }
 
   a {
@@ -112,6 +126,7 @@ export const CommitContainer = styled.div`
 `;
 
 export const RepositoryInfo = styled.div`
+  width: 30vw;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -119,6 +134,10 @@ export const RepositoryInfo = styled.div`
   h3 {
     font-size: 1rem;
     color: ${({ theme }) => theme.colors.text.primary};
+  }
+
+  @media (max-width: 1000px) {
+    width: 100%;
   }
 `;
 
@@ -206,4 +225,9 @@ export const LoadingContainer = styled.span`
   justify-content: center;
   width: 100%;
   margin-top: 3rem;
+`;
+
+export const Display = styled.a`
+  display: none;
+  display: hidden;
 `;

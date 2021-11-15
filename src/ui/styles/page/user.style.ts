@@ -1,9 +1,18 @@
 import styled, { css } from "styled-components";
 
 export const UserPageContainer = styled.main`
-  height: calc(100vh - 62px);
+  height: calc(100vh);
   display: grid;
   grid-template-columns: 28vw 1fr;
+
+  @media (max-width: 1000px) {
+    max-width: 100vw;
+    grid-template-columns: 1fr;
+
+    section {
+      max-width: calc(100vw - 1rem);
+    }
+  }
 `;
 
 export const RepositoriesContainer = styled.div`
@@ -13,7 +22,12 @@ export const RepositoriesContainer = styled.div`
   width: 100%;
   background: ${({ theme }) => theme.colors.primary.main};
   padding: 3rem 1.5rem;
-  border-right: 1px solid ${({ theme }) => theme.colors.border};
+
+  @media (max-width: 1000px) {
+    max-width: 100%;
+    background: ${({ theme }) => theme.colors.background};
+    padding: 1rem;
+  }
 `;
 
 export const RepositoriesTitle = styled.div`
@@ -21,15 +35,14 @@ export const RepositoriesTitle = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-
   h2 {
-    font-size: 16px;
+    font-size: 1rem;
   }
 
-  div {
-    background-color: ${({ theme }) => theme.colors.success.main};
-    border: 0;
-    color: ${({ theme }) => theme.colors.background};
+  @media (max-width: 1000px) {
+    h2 {
+      font-weight: normal;
+    }
   }
 `;
 
@@ -56,6 +69,19 @@ export const RepositoriesList = styled.div<RepositoriesListProps>`
       text-decoration: underline;
     }
   }
+
+  @media (max-width: 1000px) {
+    background: ${({ theme }) => theme.colors.primary.main};
+    border-radius: 6px;
+    margin: 0;
+    padding: 1rem;
+    width: 100%;
+
+    img {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
 `;
 
 export const EventsContainer = styled.div`
@@ -67,6 +93,10 @@ export const EventsTitle = styled.h2`
   font-size: 1rem;
   padding: 3rem 0 0 2rem;
   font-weight: normal;
+
+  @media (max-width: 1000px) {
+    padding: 1rem;
+  }
 `;
 
 export const ShowMore = styled.h2`
@@ -79,5 +109,10 @@ export const ShowMore = styled.h2`
 
   &:hover {
     color: ${({ theme }) => theme.colors.text.link};
+  }
+
+  @media (max-width: 1000px) {
+    margin: 0;
+    margin-bottom: 1rem;
   }
 `;

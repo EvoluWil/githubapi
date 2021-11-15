@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { AuthProvider } from "../hooks/Auth";
 import { AppContainer } from "../ui/styles/page/_app.style";
 import { Footer } from "../ui/components/Footer/Footer";
+import { FooterHome } from "../ui/components/FooterHome/FooterHome";
 import { RepositoryProvider } from "hooks/Repository";
 import { Validator } from "ui/components/Validator/Validator";
 import { EventProvider } from "hooks/Event";
@@ -48,12 +49,13 @@ function MyApp({ Component, pageProps }: AppProps) {
                   {asPath === "/" ? (
                     <>
                       <Component {...pageProps} />
-                      <Footer />
+                      <FooterHome />
                     </>
                   ) : (
                     <>
                       <Header toggleTheme={handleChageTheme} />
                       <Component {...pageProps} />
+                      <Footer />
                     </>
                   )}
                 </AppContainer>

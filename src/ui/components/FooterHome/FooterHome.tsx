@@ -1,9 +1,11 @@
 import React from "react";
-import { FooterContainer } from "./Footer.style";
+import { AtroMona, BorderFooter, FooterContainer } from "./FooterHome.style";
 
-export const Footer = () => {
+export const FooterHome = () => {
   return (
     <FooterContainer>
+      <BorderFooter src="/effect.svg" alt="" />
+      <AtroMona src="/astro-mona.svg" alt="AtroMona" />
       <a href="http://github.com" rel="noreferrer" target="_blank">
         <img src="/GitHub_Logo.png" alt="GitHub" height="30px" />
       </a>

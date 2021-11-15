@@ -9,13 +9,10 @@ export default NextAuth({
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_SECRET_KEY,
       scope: "read:user",
-      domain: process.env.NEXTAUTH_URL || "http://localhost:3000",
+      domain: process.env.NEXTAUTH_URL,
     }),
   ],
   callbacks: {
-    async signIn(user: User, account: Account, profile: Profile) {
-      return true;
-    },
     async session(session) {
       const { data } = await api.get(`/search/users?q=${session.user?.email}`);
       return { ...session, userName: data.items[0].login };

@@ -1,25 +1,18 @@
 import styled from "styled-components";
 
 export const FooterContainer = styled.footer`
-  height: 120px;
+  height: 3rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #fff;
-  padding: 16px;
+  background: ${({ theme }) => theme.colors.background};
+  padding: 1rem;
   margin-top: auto;
-  position: relative;
-`;
+  color: ${({ theme }) => theme.colors.text.primary};
 
-export const BorderFooter = styled.img`
-  position: absolute;
-  bottom: 120px;
-  left: 0;
-`;
-
-export const AtroMona = styled.img`
-  position: absolute;
-  height: 500px;
-  bottom: 70px;
-  right: 0;
+  @media (max-width: 700px) {
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding-bottom: 4rem;
+  }
 `;

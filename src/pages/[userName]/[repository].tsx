@@ -1,6 +1,7 @@
 import { useRepository } from "hooks/Repository";
 import moment from "moment";
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
+import { getSession } from "next-auth/client";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { LANGUAGE_COLOR } from "services/utils/laguageColors";
@@ -11,6 +12,7 @@ import { TagLanguageColor } from "ui/components/LanguageColor/LanguageColor";
 import { Loading } from "ui/components/Loading/Loading";
 import {
   CommitContainer,
+  Display,
   LoadingContainer,
   ProgressLanguage,
   ReleasesContainer,
@@ -85,13 +87,13 @@ const Repository: NextPage = () => {
                               {repository?.owner?.login}
                             </a>
                           </strong>{" "}
-                          <a
+                          <Display
                             href={`https://github.com/${repository.full_name}/commit/${commit.sha}`}
                             rel="noreferrer"
                             target="_blank"
                           >
                             {commit?.commit?.message}
-                          </a>
+                          </Display>
                         </>
                       }
                     />
@@ -215,3 +217,23 @@ const Repository: NextPage = () => {
 };
 
 export default Repository;
+
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+}): Promise<any> => {
+  const session = await getSession({ req });
+
+  if (!session?.user) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {
+      session,
+    },
+  };
+};

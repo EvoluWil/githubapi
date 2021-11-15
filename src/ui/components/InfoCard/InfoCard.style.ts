@@ -5,7 +5,6 @@ export const InfoContainer = styled.div`
   gap: 8px;
   align-items: center;
   justify-content: center;
-
   p {
     font-size: 14px;
     color: ${({ theme }) => theme.colors.text.primary};
@@ -14,5 +13,6 @@ export const InfoContainer = styled.div`
   span {
     font-size: 12px;
     color: ${({ theme }) => theme.colors.text.secondary};
+    white-space: nowrap;
   }
 `;
