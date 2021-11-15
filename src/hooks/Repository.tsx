@@ -134,10 +134,17 @@ const RepositoryProvider: React.FC<RepositoryProviderProps> = ({
   };
 
   useEffect(() => {
-    if (query.repository) {
-      getTree();
+    if (query?.repository && repository?.id) {
+      if (commit?.url) {
+        const repoUrl = commit.url.split("/");
+        if (repoUrl[5] !== query?.repository) {
+          getTree();
+        }
+      } else {
+        getTree();
+      }
     }
-  }, [query, commit, repository]);
+  }, [query, repository]);
 
   return (
     <RepositoryContext.Provider
