@@ -10,6 +10,10 @@ export const FooterContainer = styled.footer`
   margin-top: auto;
   position: relative;
 
+  a {
+    color: #000;
+  }
+
   @media (max-width: 1000px) {
     height: 10rem;
     margin-top: -10rem;

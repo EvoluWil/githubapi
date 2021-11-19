@@ -8,7 +8,10 @@ export const FooterContainer = styled.footer`
   background: ${({ theme }) => theme.colors.navBar};
   padding: 1rem;
   margin-top: auto;
-  color: ${({ theme }) => theme.colors.text.primary};
+
+  a {
+    color: #fff;
+  }
 
   @media (max-width: 700px) {
     margin-top: auto;

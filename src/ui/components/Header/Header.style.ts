@@ -9,7 +9,11 @@ export const HeaderContainer = styled.header`
   justify-content: space-between;
   padding: 16px 24px;
   margin: 0 auto;
+  color: #fff;
 
+  button {
+    color: #fff;
+  }
   > div {
     display: flex;
     align-items: center;
