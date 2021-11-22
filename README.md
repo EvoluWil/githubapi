@@ -11,11 +11,9 @@ Project using a public api from github with Next.JS and Typescript, with authent
 
 ## screens
 
-<img src="https://github.com/Willian-Rodrigues/githubapi/blob/main/public/screen1.png" alt="screen1"/>
+![](https://github.com/Willian-Rodrigues/githubapi/blob/main/public/web.gif)
 
-<img src="https://github.com/Willian-Rodrigues/githubapi/blob/main/public/screen2.png" alt="screen2"/>
-
-<img src="https://github.com/Willian-Rodrigues/githubapi/blob/main/public/screen3.png" alt="screen3"/>
+![](https://github.com/Willian-Rodrigues/githubapi/blob/main/public/mobile.gif)
 
 ## Features
 
